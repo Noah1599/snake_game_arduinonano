@@ -18,6 +18,7 @@ struct Snake{
   int dir[2];      //A direction to move the snake along
 };
 int highscore;
+int oldHighscore=0;
 //Define The Apple as a Struct
 typedef struct Apple Apple;
 struct Apple{
@@ -56,7 +57,7 @@ void setup() {
   lcd.setCursor(6, 1);
   lcd.print("8000");
   lcd.setCursor(3,1);
-  lcd.print("0");
+  lcd.print(oldHighscore);
   lcd.setCursor(5,1);
   lcd.print("beat me!");
 
@@ -143,8 +144,13 @@ void Update(){
     if(snake.body[j][0] == newHead[0] && snake.body[j][1] == newHead[1]){
       //Pause the game for 1 sec then Reset it
       highscore=snake.len;
+      if(highscore >=oldHighscore){
       lcd.setCursor(3,1);
       lcd.print(highscore);
+      oldHighscore=highscore;
+      }
+      
+
       delay(1000);
       snake = {{1,5},{{0,5}, {1,5}}, 2, {1,0}};//Reinitialize the snake object
       apple = {(int)random(0,8),(int)random(0,8)};//Reinitialize an apple object
